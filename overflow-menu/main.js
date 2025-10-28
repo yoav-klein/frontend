@@ -15,9 +15,12 @@ document.addEventListener('click', (e) => {
 
 function openMenu(e) {
     const pressed = document.querySelector('.kebab-container.pressed');
-    if(pressed) pressed.classList.remove('pressed')
-    const parent = e.currentTarget.parentElement;
-    console.log(parent);
-    parent.classList.toggle('pressed');
+    if(pressed) {
+        pressed.classList.remove('pressed');
+        const pressedButton = pressed.querySelector('button');
+        if(pressedButton === e.currentTarget) return;
+        
+    }
+    e.currentTarget.parentElement.classList.add('pressed');
     e.stopPropagation();
 }
