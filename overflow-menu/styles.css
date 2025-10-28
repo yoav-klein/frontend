@@ -1,0 +1,61 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+}
+
+.container {
+    height: 100%;
+    margin: auto;
+    width: 50vw;
+    background-color: aqua;
+    padding: 1rem;
+}
+
+.flex-1 {
+    flex-grow: 1;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li.user {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    padding: 1rem;
+    border: 1px solid black;
+    margin: 1rem;
+    border-radius: 5px;
+}
+
+button {
+    background: none;
+    border: none;
+
+    > svg {
+        fill: black;
+    }
+}
+
+.kebab-container {
+    position: relative;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+}
+
+.pressed .menu {
+    display: block;
+}
