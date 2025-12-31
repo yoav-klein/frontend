@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 600px;
+        }
+
+        .track {
+            --NUM-STEPS: 4;
+            --CURRENT-STEP: 0;
+            
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step {
+            flex: 1 0 0;
+        }
+
+        .step1 {
+            background-color: aqua;
+        }
+
+        .step2 {
+            background-color: bisque;
+        }
+
+        .step3 {
+            background-color: blue;
+            color: white;
+        }
+        
+        .step4 {
+            color: white;
+            background-color: black;
+        }
+
+        #next, #prev {
+            display: none;
+        }
+
+        @media(max-width: 1000px) {
+            .container {
+                height: 600px;
+                overflow-x: hidden;
+
+                position: relative;
+            }
+
+            #next, #prev {
+                display: inline;
+                position: absolute;
+                bottom: 20px;
+            }
+
+            #next {
+                right: 20px;
+            }
+
+            #prev {
+                left: 20px;
+            }
+
+            .step {
+                height: 100%;
+                width: calc(100% / var(--NUM-STEPS));
+            }
+
+            .track {
+                height: 100%;
+                width: calc(var(--NUM-STEPS) * 100%);
+                flex-direction: row;
+
+                transform: translateX(calc(-1 * (100% / var(--NUM-STEPS)) * var(--CURRENT-STEP)));
+                transition: transform 1s;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="track">
+            <div class="step step1">STEP 1</div>
+            <div class="step step2">STEP 2</div>
+            <div class="step step3">STEP 3</div>
+            <div class="step step4">STEP 4</div>
+        </div>
+        <button id="next">NEXT</button>
+        <button id="prev">PREVIOUS</button>
+    </div>
+    <script>
+        const trackEl = document.querySelector('.track');
+        const numSteps = parseInt(getComputedStyle(trackEl).getPropertyValue('--NUM-STEPS'));
+        let currStep = parseInt(getComputedStyle(trackEl).getPropertyValue('--CURRENT-STEP'));
+        
+        const render = () => trackEl.style.setProperty('--CURRENT-STEP', currStep);
+        
+        document.querySelector('#next').addEventListener('click', () => {
+            if(currStep < numSteps - 1) {
+                ++currStep;
+                render();
+            }
+        });
+        
+        document.querySelector('#prev').addEventListener('click', () => {
+            if(currStep > 0) {
+                --currStep;
+                render();
+            }
+        });
+    </script>
+    
+</body>
+</html>
