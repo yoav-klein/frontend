@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 600px;
+        }
+
+        .track {
+            --NUM-STEPS: 4;
+            --CURRENT-STEP: 0;
+            
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step {
+            flex: 1 0 0;
+        }
+
+        .step1 {
+            background-color: aqua;
+        }
+
+        .step2 {
+            background-color: bisque;
+        }
+
+        .step3 {
+            background-color: blue;
+            color: white;
+        }
+        
+        .step4 {
+            color: white;
+            background-color: black;
+        }
+
+        .buttons {
+            display: none;
+        }
+
+        @media(max-width: 1000px) {
+            .container {
+                height: 600px;
+                overflow-x: hidden;
+
+                display: flex;
+                flex-direction: column;
+            }
+
+            .buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                justify-content: space-between;
+                padding: 20px 50px;
+
+                background-color: antiquewhite;
+
+                > button {
+                    height: 3rem;
+                    position: relative;
+                }
+
+                span {
+                    opacity: 0;
+                    position: absolute;
+                    inset: 0;
+                    display: grid;
+                    place-content: center;
+                    transition: opacity 0.5s;
+                }
+                
+                span.current {
+                    opacity: 1;
+                }
+            }
+
+
+            .step {
+                height: 100%;
+                width: calc(100% / var(--NUM-STEPS));
+            }
+
+            .track {
+                width: calc(var(--NUM-STEPS) * 100%);
+                flex-direction: row;
+                flex-grow: 1;
+
+                transform: translateX(calc(-1 * (100% / var(--NUM-STEPS)) * var(--CURRENT-STEP)));
+                transition: transform 1s;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="track">
+            <div class="step step1">STEP 1</div>
+            <div class="step step2">STEP 2</div>
+            <div class="step step3">STEP 3</div>
+            <div class="step step4">STEP 4</div>
+        </div>
+        <div class="buttons">
+            <button id="primary">
+                <span class="current">Continue</span>
+                <span>Review</span>
+                <span>Save!</span>
+            </button>
+            <button id="secondary">
+                <span class="current">Cancel</span>
+                <span>Back</span>
+                <span>Back</span>
+            </button>
+        </div>
+    </div>
+    <script>
+        const trackEl = document.querySelector('.track');
+        const numSteps = parseInt(getComputedStyle(trackEl).getPropertyValue('--NUM-STEPS'));
+        let currStep = parseInt(getComputedStyle(trackEl).getPropertyValue('--CURRENT-STEP'));
+        
+        const render = () => trackEl.style.setProperty('--CURRENT-STEP', currStep);
+        
+        document.querySelector('#primary').addEventListener('click', () => {
+            if(currStep < numSteps - 1) {
+                ++currStep;
+                render();
+                setButtons();
+            }
+        });
+        
+        document.querySelector('#secondary').addEventListener('click', () => {
+            if(currStep > 0) {
+                --currStep;
+                render();
+                setButtons();
+            }
+        });
+
+        function setButtons() {
+            const primaryLabels = Array.from(document.querySelectorAll('#primary span'));
+            const secondaryLabels = Array.from(document.querySelectorAll('#secondary span'));
+
+            primaryLabels.forEach(label => label.classList.remove('current'));
+            secondaryLabels.forEach(label => label.classList.remove('current'));
+            primaryLabels[currStep].classList.add('current');
+            secondaryLabels[currStep].classList.add('current');
+
+        }
+    </script>
+    
+</body>
+</html>
