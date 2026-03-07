@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 50%;
+            height: 500px;
+            margin: 0 auto;
+            margin-top: 100px;
+            background-color: aqua;
+
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kebab-menu {
+            background-color: azure;
+            position: relative;
+        }
+
+        .kebab-menu-button {
+            border: none;
+            width: 30px;
+            height: 30px;
+        }
+
+        .kebab-menu-button svg {
+            height: 100%;
+            width: 100%;
+        }
+
+        .kebab-menu-actions {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+        }
+
+        .kebab-menu.kebab-show .kebab-menu-actions {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+
+        <div class="kebab-menu">
+            <button class="kebab-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#0000000"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
+            </button>
+            <div class="kebab-menu-actions">
+                <div class="kebab-menu-item">Edit</div>
+                <div class="kebab-menu-item">Delete</div>
+                <div class="kebab-menu-item"></div>
+            </div>
+        </div>
+        <div class="kebab-menu">
+            <button class="kebab-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#0000000"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
+            </button>
+            <div class="kebab-menu-actions">
+                <div class="kebab-menu-item">Edit</div>
+                <div class="kebab-menu-item">Delete</div>
+                <div class="kebab-menu-item"></div>
+            </div>
+        </div>
+        <div class="kebab-menu">
+            <button class="kebab-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#0000000"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg>
+            </button>
+            <div class="kebab-menu-actions">
+                <div class="kebab-menu-item">Edit</div>
+                <div class="kebab-menu-item">Delete</div>
+                <div class="kebab-menu-item"></div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+
+        document.addEventListener('click', e => {
+            const pressedKebabMenu = e.target.closest('.kebab-menu');
+            
+            // pressed outside of kebab menu
+            if(null === pressedKebabMenu) {
+                closeAllMenus();
+                return;
+            }
+
+            const kebabButton = e.target.closest('.kebab-menu-button');
+            if(kebabButton !== null) { // pressed button
+                // get opened kebab and check if pressed the opened one
+                const opened = document.querySelector('.kebab-menu.kebab-show');
+                if(opened !== pressedKebabMenu) closeAllMenus();
+    
+                pressedKebabMenu.classList.toggle('kebab-show');
+            }
+
+        });
+
+        function closeAllMenus() {
+            Array.from(document.querySelectorAll('.kebab-menu.kebab-show')).forEach(item => item.classList.remove('kebab-show'));
+        }
+
+    </script>
+</body>
+</html>
