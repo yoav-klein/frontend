@@ -79,6 +79,18 @@ main {
     padding: 1rem;
     /* same here */
     overflow: auto;
+    position: relative;
+}
+
+section {
+    overflow: auto;
+    height: 100%;
+}
+
+button {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
 }
 
 .overlay {

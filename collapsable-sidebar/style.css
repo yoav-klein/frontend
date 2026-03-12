@@ -29,8 +29,12 @@ html {
     line-height: 1.5rem;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     background-color: var(--BASE-COLOR);
     color: var(--TEXT-COLOR);
 }
@@ -76,10 +80,11 @@ header {
     display: grid;
     grid-template-columns: auto 1fr;
     position: relative;
+    height: 100%;
 }
 
 #sidebar {
-    min-height: calc(100vh - var(--HEADER-HEIGHT));
+    /* min-height: calc(100vh - var(--HEADER-HEIGHT)); */
     width: 250px;
     padding: 5px 1em;
     border-right: 1px solid var(--LINE-COLOR);
@@ -87,7 +92,7 @@ header {
     /* sticky positioning so that when we scroll down, the sidebar will stay in place */
     position: sticky;
     top: var(--HEADER-HEIGHT);
-    align-self: start;
+    /* align-self: start; */
     transition: 300ms ease-in-out;
     z-index: 1000; /* be on top of overlay */
     overflow: hidden;
@@ -175,6 +180,10 @@ header {
 /* have the submenu items idented */
 #sidebar .sub-menu a {
     padding-inline-start: 2em;
+}
+
+main {
+    overflow: auto;
 }
 
 /* || MOBILE SCREEN */

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <button data-open-modal data-modal-id="dialog1">OPEN DIALOG1</button>
+    
+    <dialog id="dialog1" class="form-dialog js-form-dialog">
+        <header class="form-dialog-header">
+            <h2>My Form 1</h2>
+            <button class="js-close-dialog-button close-dialog-button">X</button>
+        </header>
+        <div class="error-banner"></div>
+        <form id="person-form" action="">
+            <div class="form-dialog-body">
+                <div class="field">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name">
+                    <p class="field-validation-error"></p>
+                </div>
+                <div class="field">
+                    <label for="name">Age</label>
+                    <input type="text" id="age" name="age">
+                    <p class="field-validation-error"></p>
+                </div>
+            </div>
+            <div class="form-dialog-footer">
+                <button type="button" class="js-close-dialog-button secondary-action">Cancel</button>
+                <button type="button" id="submit-person" class="primary-action">Submit</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="form.js"></script>
+
+    <script>
+        const submitButton = document.getElementById('submit-person');
+        const formEl = document.getElementById('person-form');
+        
+        /* simulate an error */
+        submitButton.addEventListener('click', () => {
+            const dialogEl = submitButton.closest('.form-dialog');
+            const formData = new FormData(formEl);
+            const data = Object.fromEntries(formData.entries());
+            
+            dialogEl.dispatchEvent(new CustomEvent('submitting'));
+            
+            /* simulate a fetch request that can take some time */
+            setTimeout(() => {
+                /* simulate a field validation error */
+                if(data.name === 'Yoav') {
+                    dialogEl.dispatchEvent(new CustomEvent('submiterror', { detail: { type: 'field', fieldErrors: [{ field: 'name', reason: 'ugly' }] }  }));
+                } else if(data.name === "Hava") {
+                    dialogEl.dispatchEvent(new CustomEvent('submiterror', { detail: { type: 'form', message: 'CONFLICT' } }));
+                } else {
+                    dialogEl.dispatchEvent(new CustomEvent('submitsuccess')); 
+                }
+            }, 2500);
+            
+        });
+    </script>
+</body>
+</html>
