@@ -32,7 +32,7 @@ body {
     
     /* split the layout to header and content */
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
 }
 
 header {
@@ -59,7 +59,7 @@ header {
     /* the sidebar has a auto width, the rest is main */
     grid-template-columns: auto 1fr;
     /* without overflow: auto here, if the sidebar/main will be heigher from the screen then the whole screen will scroll (including the header) */
-    overflow: auto;
+    /* overflow: auto; */
     /* we must have this so that the overlay will not be counted as a grid item */
     grid-template-areas: "sidebar main";
 }
